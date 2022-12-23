@@ -1,0 +1,1 @@
+export { WindowConfig } from "./WindowConfig";
