@@ -5,6 +5,7 @@ const dark = {
         primary: "#889bae",
         secondary: "#889bae",
         third: "#ffffff",
+        primary_hover: "#ffffff",
         background_primary: "#1f2233",
         background_secondary: "#35384e",
         background_third: "#24283d",

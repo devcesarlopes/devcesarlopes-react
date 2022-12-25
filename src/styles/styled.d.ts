@@ -8,6 +8,7 @@ declare module "styled-components" {
             primary: string;
             secondary: string;
             third: string;
+            primary_hover: string;
             background_primary: string;
             background_secondary: string;
             background_third: string;

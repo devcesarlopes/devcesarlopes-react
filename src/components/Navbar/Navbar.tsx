@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { MouseEvent, useContext, useState } from "react";
 import styled, { ThemeContext } from "styled-components";
 import LogoDark from "../../assets/imgs/logo-no-background-white.svg";
 import LogoLight from "../../assets/imgs/logo-no-background.svg";
@@ -11,10 +11,40 @@ export const Navbar = ({
     setShowWindow: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
     const [menuToggle, setMenuToggle] = useState(false);
-    const handleScroll = (id: string) => {
-        const item = document.getElementById(id) as HTMLElement;
-        const pos = item.getBoundingClientRect();
-        window.scrollTo(0, pos.top);
+    const handleScroll = (event: MouseEvent<HTMLAnchorElement>) => {
+        event.preventDefault();
+        console.log(window.outerHeight);
+        const id = (event.target as Element).id.replace("goto-", "");
+        switch (id) {
+            case "Home":
+                window.scrollTo(0, 0);
+                break;
+            case "Portfolio":
+                window.scrollTo(0, window.innerHeight * 0.6);
+                break;
+            case "About":
+                let about = document.getElementById("About") as HTMLElement;
+                let aboutPos = about.getBoundingClientRect();
+                window.scrollTo(
+                    0,
+                    window.pageYOffset + aboutPos.top - window.innerHeight * 0.1
+                );
+                break;
+            case "Experiences":
+                let exp = document.getElementById("Experiences") as HTMLElement;
+                let expPos = exp.getBoundingClientRect();
+                window.scrollTo(
+                    0,
+                    window.pageYOffset + expPos.top - window.innerHeight * 0.1
+                );
+                break;
+
+            case "Footer":
+                let foot = document.getElementById("Footer") as HTMLElement;
+                let footPos = foot.getBoundingClientRect();
+                window.scrollTo(0, window.pageYOffset + footPos.top);
+                break;
+        }
     };
 
     const { title } = useContext(ThemeContext);
@@ -22,27 +52,24 @@ export const Navbar = ({
         <NavbarComponent>
             <NavbarContainer>
                 <ImgLogo src={title === "dark" ? LogoDark : LogoLight} />
-                <NavbarLinks lang={lang}>
+                <NavbarLinks lang={lang} handleScroll={handleScroll}>
+                    <Li id="goto-Home" HTMLtext="Home" onClick={handleScroll} />
                     <Li
-                        HTMLtext="Home"
-                        // style={{ color: theme === "dark" ? "white" : "black" }}
-                        onClick={() => handleScroll("Home")}
+                        id="goto-Portfolio"
+                        HTMLtext={lang === "en" ? "Portfolio" : "Portifolio"}
+                        onClick={handleScroll}
                     />
                     <Li
-                        HTMLtext={lang === "en" ? "Portfolio" : "Portifólio"}
-                        onClick={() => handleScroll("Home")}
-                    />
-                    <Li
-                        HTMLtext={lang === "en" ? "Services" : "Serviços"}
-                        onClick={() => handleScroll("MyServices")}
-                    />
-                    <Li
+                        id="goto-About"
                         HTMLtext={lang === "en" ? "About" : "Sobre"}
-                        onClick={() => handleScroll("Home")}
+                        onClick={handleScroll}
                     />
                     <Li
-                        HTMLtext={lang === "en" ? "Resume" : "Carreira"}
-                        onClick={() => handleScroll("Home")}
+                        id="goto-Experiences"
+                        HTMLtext={
+                            lang === "en" ? "Experiences" : "Experiências"
+                        }
+                        onClick={handleScroll}
                     />
                 </NavbarLinks>
                 <IconsContainer>
@@ -110,9 +137,6 @@ const Ul = styled.ul`
     align-items: center;
     -webkit-box-pack: justify;
     justify-content: space-between;
-    a {
-        color: ${(props) => props.theme.colors.primary};
-    }
 `;
 
 const NavbarCollapse = styled.div`
@@ -130,14 +154,16 @@ const NavbarCollapse = styled.div`
 const NavbarLinks = ({
     lang,
     children,
+    handleScroll,
 }: {
     lang: string;
     children: JSX.Element | JSX.Element[];
+    handleScroll: (event: MouseEvent<HTMLAnchorElement>) => void;
 }) => {
     return (
         <NavbarCollapse>
             <Ul>{children}</Ul>
-            <ContactMe href="#contact">
+            <ContactMe id="goto-Footer" onClick={handleScroll}>
                 {lang === "en" ? "Contact Me" : "Contato"}
             </ContactMe>
         </NavbarCollapse>
@@ -147,7 +173,8 @@ const NavbarLinks = ({
 const NavLink = styled.a.attrs({
     className: "",
 })`
-    // color: #eaeeff;
+    color: ${(props) => props.theme.colors.primary};
+    cursor: pointer;
     font-size: 17px;
     font-weight: bold;
     letter-spacing: 0.5px;
@@ -156,18 +183,27 @@ const NavLink = styled.a.attrs({
     font-family: "Montserrat", sans-serif;
     transition: all 0.4s ease-in-out;
     padding: 10px 12px;
+
+    &:hover {
+        color: ${(props) => props.theme.colors.background_primary};
+        background: ${(props) => props.theme.colors.primary};
+        border-radius: 4px;
+        padding: 2px 12px;
+    }
 `;
 const Li = ({
+    id,
     HTMLtext,
     style,
     onClick,
 }: {
+    id: string;
     style?: React.CSSProperties;
     HTMLtext: string;
-    onClick: any;
+    onClick: (event: MouseEvent<HTMLAnchorElement>) => void;
 }) => {
     return (
-        <NavLink style={style} onClick={onClick}>
+        <NavLink id={id} style={style} onClick={onClick}>
             {HTMLtext}
         </NavLink>
     );
@@ -182,7 +218,7 @@ const ContactMe = styled.a`
     text-transform: capitalize;
     text-decoration: none;
     padding: 10px 18px;
-
+    cursor: pointer;
     border-radius: 4px;
     margin-left: 10px;
     font-family: "Montserrat", sans-serif;

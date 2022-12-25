@@ -8,10 +8,10 @@ export const Home = ({ lang }: { lang: string }) => {
     return (
         <>
             <Banner id="Home" lang={lang} />
-            <Portfolio id="Portifolio" lang={lang} />
-            <Container>
+            <Portfolio id="Portfolio" lang={lang} />
+            <Container id="TEST">
                 <About id="About" lang={lang} />
-                <Experiences id="MyServices" lang={lang} />
+                <Experiences id="Experiences" lang={lang} />
             </Container>
         </>
     );

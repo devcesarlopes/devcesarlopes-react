@@ -5,6 +5,7 @@ const light = {
         primary: "#113f67",
         secondary: "#87c0cd",
         third: "#113f67",
+        primary_hover: "#ffffff",
         background_primary: "#e8e8e8",
         background_secondary: "#395a7a",
         background_third: "#20486f",

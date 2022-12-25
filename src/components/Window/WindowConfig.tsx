@@ -1,4 +1,5 @@
-import styled from "styled-components";
+import { useContext } from "react";
+import styled, { ThemeContext } from "styled-components";
 
 export const WindowConfig = ({
     lang,
@@ -13,6 +14,8 @@ export const WindowConfig = ({
     showWindow: boolean;
     setShowWindow: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
+    const { title } = useContext(ThemeContext);
+
     return (
         <CardBackground style={{ display: showWindow ? "block" : "none" }}>
             <Card className="card">
@@ -45,34 +48,30 @@ export const WindowConfig = ({
                             {lang === "en" || lang === null ? "Theme" : "Tema"}
                         </CardSelectionTitle>
                         <CardSelection>
-                            <SelectionOption
-                                type="light"
-                                onClick={() => setTheme("light")}
-                            >
+                            <SelectionOption onClick={() => setTheme("light")}>
                                 <SelectionCheckBox
-                                    // checked={theme === "light"}
+                                    checked={title === "light"}
                                     type="checkbox"
                                     onChange={() => {
                                         void 0;
                                     }}
                                 />
+                                <CheckboxMark checked={title === "light"} />
                                 <strong>
                                     {lang === "en" || lang === null
                                         ? "Theme-Light"
                                         : "Tema Claro"}
                                 </strong>
                             </SelectionOption>
-                            <SelectionOption
-                                type="dark"
-                                onClick={() => setTheme("dark")}
-                            >
+                            <SelectionOption onClick={() => setTheme("dark")}>
                                 <SelectionCheckBox
-                                    // checked={theme === "dark"}
+                                    checked={title === "dark"}
                                     type="checkbox"
                                     onChange={() => {
                                         void 0;
                                     }}
                                 />
+                                <CheckboxMark checked={title === "dark"} />
                                 <strong>
                                     {lang === "en" || lang === null
                                         ? "Theme-Dark"
@@ -91,10 +90,7 @@ export const WindowConfig = ({
                                 : "Idioma"}
                         </CardSelectionTitle>
                         <CardSelection>
-                            {/* <SelectionOption
-                                // type={theme}
-                                onClick={() => setLang("en")}
-                            >
+                            <SelectionOption onClick={() => setLang("en")}>
                                 <SelectionCheckBox
                                     checked={lang === "en"}
                                     type="checkbox"
@@ -102,16 +98,14 @@ export const WindowConfig = ({
                                         void 0;
                                     }}
                                 />
+                                <CheckboxMark checked={lang === "en"} />
                                 <strong>
                                     {lang === "en" || lang === null
                                         ? "English"
                                         : "Inglês"}
                                 </strong>
                             </SelectionOption>
-                            <SelectionOption
-                                // type={theme}
-                                onClick={() => setLang("pt")}
-                            >
+                            <SelectionOption onClick={() => setLang("pt")}>
                                 <SelectionCheckBox
                                     checked={lang === "pt"}
                                     type="checkbox"
@@ -119,12 +113,13 @@ export const WindowConfig = ({
                                         void 0;
                                     }}
                                 />
+                                <CheckboxMark checked={lang === "pt"} />
                                 <strong>
                                     {lang === "en" || lang === null
                                         ? "Portuguese"
                                         : "Português"}
                                 </strong>
-                            </SelectionOption> */}
+                            </SelectionOption>
                         </CardSelection>
                     </CardSelectionContainer>
                 </CardBody>
@@ -162,14 +157,14 @@ const CardHeader = styled.div<{ theme: string }>`
     flex-direction: row;
     justify-content: space-between;
     font-size: 20px;
-
-    /* background: ${(p) => (p.theme === "dark" ? "#1f2233" : "")}; */
+    background: ${(props) => props.theme.colors.primary};
 `;
 
 const CardTitle = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
+    color: ${(props) => props.theme.colors.background_primary};
 `;
 
 const CardIcon = styled.span<{ theme: string }>`
@@ -183,7 +178,7 @@ const CardTitleText = styled.strong<{ theme: string }>`
 `;
 
 const CardBody = styled.div<{ theme: string }>`
-    /* background: ${(p) => (p.theme === "dark" ? "#183c64" : "white")}; */
+    background: ${(props) => props.theme.colors.background_primary};
     border-radius: 0 0 5px 5px;
     display: flex;
     flex-direction: column;
@@ -194,14 +189,13 @@ const CardSelectionContainer = styled.div<{ theme: string }>`
 `;
 
 const CardSelectionTitle = styled.strong<{ theme: string }>`
-    /* color: ${(p) => (p.theme === "dark" ? "white" : "#183c64")}; */
+    color: ${(props) => props.theme.colors.third};
     display: flex;
     flex-direction: row;
     align-items: center;
     font-size: 20px;
     padding: 10px;
     box-shadow: 0px 2px 0px 0px;
-    /* ${(p) => (p.theme === "dark" ? "white" : "#183c64")}; */
 `;
 
 const CardSelection = styled.div`
@@ -211,31 +205,45 @@ const CardSelection = styled.div`
     gap: 5%;
 `;
 
-/* border: 1px solid ${(p) => (p.theme === "dark" ? "white" : "#183c64")}; */
-const SelectionOption = styled.div<{ type: string }>`
+const SelectionOption = styled.div`
     @media screen and (max-width: 680px) {
         font-size: 0.8rem;
     }
-
+    transition: all ease-in-out;
     width: 50%;
+    position: relative;
     display: flex;
     align-items: center;
     flex-direction: row;
-    /* background: ${(p) => (p.type === "dark" ? "#183c64" : "white")};
-    color: ${(p) => (p.type === "dark" ? "white" : "#183c64")}; */
+    border: 1px solid ${(props) => props.theme.colors.third};
+    color: ${(props) => props.theme.colors.third};
     cursor: pointer;
 
     border-radius: 5px;
     padding: 15px;
 
     &:hover {
-        /* background-color: ${(p) =>
-            p.type === "dark" ? "#1f2233" : "#ccc"}; */
+        background-color: ${(props) => props.theme.colors.third};
+        color: ${(props) => props.theme.colors.background_primary};
 
         input {
-            /* background-color: ${(p) =>
-                p.type === "dark" ? "gray" : "black"}; */
         }
+    }
+`;
+
+const CheckboxMark = styled.span<{ checked: boolean }>`
+    ::after {
+        content: "";
+        position: absolute;
+        /* top: 17px; */
+        /* left: 15px; */
+        top: calc(15px + 0.5em);
+        left: calc(15px + 0.4em);
+        width: 0.5em;
+        height: 0.5em;
+        border-radius: 50%;
+        background-color: ${(props) =>
+            props.checked ? props.theme.colors.background_secondary : ""};
     }
 `;
 
@@ -246,7 +254,7 @@ const SelectionCheckBox = styled.input<{ type: string; theme: string }>`
     background-color: white;
     border-radius: 50%;
     vertical-align: middle;
-    border: 1px solid #ddd;
+    border: 1px solid #000;
     appearance: none;
     -webkit-appearance: none;
     outline: none;

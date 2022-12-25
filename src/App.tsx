@@ -37,7 +37,7 @@ function App() {
     useEffect(() => {
         localStorage.setItem(
             "theme",
-            theme.title === "light" ? "dark" : "light"
+            theme.title === "light" ? "light" : "dark"
         );
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [theme]);
