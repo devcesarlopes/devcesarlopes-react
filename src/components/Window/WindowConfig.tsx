@@ -1,14 +1,12 @@
 import styled from "styled-components";
 
 export const WindowConfig = ({
-    theme,
     lang,
     setTheme,
     setLang,
     showWindow,
     setShowWindow,
 }: {
-    theme: string;
     lang: string;
     setTheme: React.Dispatch<React.SetStateAction<string>>;
     setLang: React.Dispatch<React.SetStateAction<string>>;
@@ -18,15 +16,12 @@ export const WindowConfig = ({
     return (
         <CardBackground style={{ display: showWindow ? "block" : "none" }}>
             <Card className="card">
-                <CardHeader theme={theme} className="card-header">
-                    <CardTitle theme={theme}>
-                        <CardIcon
-                            theme={theme}
-                            className="material-symbols-outlined"
-                        >
+                <CardHeader className="card-header">
+                    <CardTitle>
+                        <CardIcon className="material-symbols-outlined">
                             settings
                         </CardIcon>
-                        <CardTitleText theme={theme}>
+                        <CardTitleText>
                             {lang === "en" || lang === null
                                 ? "Configurations"
                                 : "Configurações"}
@@ -41,27 +36,22 @@ export const WindowConfig = ({
                     </button>
                 </CardHeader>
 
-                <CardBody theme={theme} className="card-body">
+                <CardBody className="card-body">
                     <CardSelectionContainer>
-                        <CardSelectionTitle theme={theme}>
-                            <CardIcon
-                                theme={theme}
-                                className="material-symbols-outlined"
-                            >
+                        <CardSelectionTitle>
+                            <CardIcon className="material-symbols-outlined">
                                 palette
                             </CardIcon>
                             {lang === "en" || lang === null ? "Theme" : "Tema"}
                         </CardSelectionTitle>
                         <CardSelection>
                             <SelectionOption
-                                theme={theme}
                                 type="light"
                                 onClick={() => setTheme("light")}
                             >
                                 <SelectionCheckBox
-                                    checked={theme === "light"}
+                                    // checked={theme === "light"}
                                     type="checkbox"
-                                    theme={theme}
                                     onChange={() => {
                                         void 0;
                                     }}
@@ -73,14 +63,12 @@ export const WindowConfig = ({
                                 </strong>
                             </SelectionOption>
                             <SelectionOption
-                                theme={theme}
                                 type="dark"
                                 onClick={() => setTheme("dark")}
                             >
                                 <SelectionCheckBox
-                                    checked={theme === "dark"}
+                                    // checked={theme === "dark"}
                                     type="checkbox"
-                                    theme={theme}
                                     onChange={() => {
                                         void 0;
                                     }}
@@ -94,11 +82,8 @@ export const WindowConfig = ({
                         </CardSelection>
                     </CardSelectionContainer>
                     <CardSelectionContainer>
-                        <CardSelectionTitle theme={theme}>
-                            <CardIcon
-                                theme={theme}
-                                className="material-symbols-outlined"
-                            >
+                        <CardSelectionTitle>
+                            <CardIcon className="material-symbols-outlined">
                                 translate
                             </CardIcon>
                             {lang === "en" || lang === null
@@ -106,15 +91,13 @@ export const WindowConfig = ({
                                 : "Idioma"}
                         </CardSelectionTitle>
                         <CardSelection>
-                            <SelectionOption
-                                theme={theme}
-                                type={theme}
+                            {/* <SelectionOption
+                                // type={theme}
                                 onClick={() => setLang("en")}
                             >
                                 <SelectionCheckBox
                                     checked={lang === "en"}
                                     type="checkbox"
-                                    theme={theme}
                                     onChange={() => {
                                         void 0;
                                     }}
@@ -126,14 +109,12 @@ export const WindowConfig = ({
                                 </strong>
                             </SelectionOption>
                             <SelectionOption
-                                theme={theme}
-                                type={theme}
+                                // type={theme}
                                 onClick={() => setLang("pt")}
                             >
                                 <SelectionCheckBox
                                     checked={lang === "pt"}
                                     type="checkbox"
-                                    theme={theme}
                                     onChange={() => {
                                         void 0;
                                     }}
@@ -143,7 +124,7 @@ export const WindowConfig = ({
                                         ? "Portuguese"
                                         : "Português"}
                                 </strong>
-                            </SelectionOption>
+                            </SelectionOption> */}
                         </CardSelection>
                     </CardSelectionContainer>
                 </CardBody>
@@ -182,7 +163,7 @@ const CardHeader = styled.div<{ theme: string }>`
     justify-content: space-between;
     font-size: 20px;
 
-    background: ${(p) => (p.theme === "dark" ? "#1f2233" : "")};
+    /* background: ${(p) => (p.theme === "dark" ? "#1f2233" : "")}; */
 `;
 
 const CardTitle = styled.div`
@@ -194,15 +175,15 @@ const CardTitle = styled.div`
 const CardIcon = styled.span<{ theme: string }>`
     margin-right: 10px;
 
-    color: ${(p) => (p.theme === "dark" ? "white" : "")};
+    /* color: ${(p) => (p.theme === "dark" ? "white" : "")}; */
 `;
 
 const CardTitleText = styled.strong<{ theme: string }>`
-    color: ${(p) => (p.theme === "dark" ? "white" : "")};
+    /* color: ${(p) => (p.theme === "dark" ? "white" : "")}; */
 `;
 
 const CardBody = styled.div<{ theme: string }>`
-    background: ${(p) => (p.theme === "dark" ? "#183c64" : "white")};
+    /* background: ${(p) => (p.theme === "dark" ? "#183c64" : "white")}; */
     border-radius: 0 0 5px 5px;
     display: flex;
     flex-direction: column;
@@ -210,21 +191,17 @@ const CardBody = styled.div<{ theme: string }>`
 
 const CardSelectionContainer = styled.div<{ theme: string }>`
     width: 100%;
-    // color: ${(p) => (p.theme === "dark" ? "white" : "")};
-    // border-radius: 0 0 5px 5px;
-    // display: flex;
-    // flex-direction: column;
 `;
 
 const CardSelectionTitle = styled.strong<{ theme: string }>`
-    color: ${(p) => (p.theme === "dark" ? "white" : "#183c64")};
+    /* color: ${(p) => (p.theme === "dark" ? "white" : "#183c64")}; */
     display: flex;
     flex-direction: row;
     align-items: center;
     font-size: 20px;
     padding: 10px;
-    box-shadow: 0px 2px 0px 0px
-        ${(p) => (p.theme === "dark" ? "white" : "#183c64")};
+    box-shadow: 0px 2px 0px 0px;
+    /* ${(p) => (p.theme === "dark" ? "white" : "#183c64")}; */
 `;
 
 const CardSelection = styled.div`
@@ -234,7 +211,8 @@ const CardSelection = styled.div`
     gap: 5%;
 `;
 
-const SelectionOption = styled.div<{ type: string; theme: string }>`
+/* border: 1px solid ${(p) => (p.theme === "dark" ? "white" : "#183c64")}; */
+const SelectionOption = styled.div<{ type: string }>`
     @media screen and (max-width: 680px) {
         font-size: 0.8rem;
     }
@@ -243,19 +221,20 @@ const SelectionOption = styled.div<{ type: string; theme: string }>`
     display: flex;
     align-items: center;
     flex-direction: row;
-    background: ${(p) => (p.type === "dark" ? "#183c64" : "white")};
-    color: ${(p) => (p.type === "dark" ? "white" : "#183c64")};
+    /* background: ${(p) => (p.type === "dark" ? "#183c64" : "white")};
+    color: ${(p) => (p.type === "dark" ? "white" : "#183c64")}; */
     cursor: pointer;
 
     border-radius: 5px;
     padding: 15px;
-    border: 1px solid ${(p) => (p.theme === "dark" ? "white" : "#183c64")};
 
     &:hover {
-        background-color: ${(p) => (p.type === "dark" ? "#1f2233" : "#ccc")};
+        /* background-color: ${(p) =>
+            p.type === "dark" ? "#1f2233" : "#ccc"}; */
 
         input {
-            background-color: ${(p) => (p.type === "dark" ? "gray" : "black")};
+            /* background-color: ${(p) =>
+                p.type === "dark" ? "gray" : "black"}; */
         }
     }
 `;
@@ -274,10 +253,12 @@ const SelectionCheckBox = styled.input<{ type: string; theme: string }>`
     cursor: pointer;
 
     &:hover {
-        background-color: ${(p) => (p.type === "dark" ? "gray" : "black")};
+        /* background-color: ${(p) =>
+            p.type === "dark" ? "gray" : "black"}; */
     }
 
     &:checked {
-        background-color: ${(p) => (p.theme === "dark" ? "gray" : "black")};
+        /* background-color: ${(p) =>
+            p.theme === "dark" ? "gray" : "black"}; */
     }
 `;

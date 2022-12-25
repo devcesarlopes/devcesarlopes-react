@@ -1,17 +1,9 @@
-import styled from "styled-components";
-
-export const About = ({
-    id,
-    theme,
-    lang,
-}: {
-    id: string;
-    theme: string;
-    lang: string;
-}) => {
+import { Container } from "./styles";
+import { Title } from "../../components";
+export const About = ({ id, lang }: { id: string; lang: string }) => {
     return (
-        <Container id={id} theme={theme}>
-            <Title theme={theme}>
+        <Container id={id}>
+            <Title>
                 <h1>{lang === "en" ? "About Me" : "Sobre Mim"}</h1>
             </Title>
             <div>
@@ -84,49 +76,3 @@ export const About = ({
         </Container>
     );
 };
-
-const Container = styled.div<{ theme: string }>`
-    @media screen and (max-width: 1080px) {
-        width: 100%;
-        box-shadow: 0px 0 5px 2px #888;
-        z-index: 2;
-        padding-bottom: 5%;
-        background: ${(p) =>
-            p.theme === "dark" ? "#24283d!important;" : "#20486f!important;"};
-    }
-
-    width: 50%;
-    height: fit-content;
-    display: flex;
-    padding: 2% 5%;
-    align-items: center;
-    flex-direction: column;
-    justify-content: space-evenly;
-    background: transparent !important;
-
-    color: white;
-    font-weight: 600;
-`;
-
-const Title = styled.div<{ theme: string }>`
-    margin-top: 30px;
-    width: 100%;
-    color: white;
-    position: relative;
-
-    h1 {
-        font-size: 35px;
-        font-family: museomoderno-black;
-    }
-
-    h1:after {
-        content: "";
-        position: absolute;
-        margin-top: 40px;
-        left: 0;
-        width: 100px;
-        height: 2px;
-        background-color: ${(p) =>
-            p.theme === "dark" ? "#889BAE" : "#87c0cd"};
-    }
-`;

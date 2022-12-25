@@ -1,16 +1,14 @@
-import { useState } from "react";
-import styled from "styled-components";
+import { useContext, useState } from "react";
+import styled, { ThemeContext } from "styled-components";
 import LogoDark from "../../assets/imgs/logo-no-background-white.svg";
 import LogoLight from "../../assets/imgs/logo-no-background.svg";
 
 export const Navbar = ({
-    theme,
     lang,
     setShowWindow,
 }: {
-    setShowWindow: React.Dispatch<React.SetStateAction<boolean>>;
-    theme: string;
     lang: string;
+    setShowWindow: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
     const [menuToggle, setMenuToggle] = useState(false);
     const handleScroll = (id: string) => {
@@ -18,14 +16,16 @@ export const Navbar = ({
         const pos = item.getBoundingClientRect();
         window.scrollTo(0, pos.top);
     };
+
+    const { title } = useContext(ThemeContext);
     return (
-        <NavbarComponent theme={theme}>
+        <NavbarComponent>
             <NavbarContainer>
-                <ImgLogo src={theme === "dark" ? LogoDark : LogoLight} />
-                <NavbarLinks theme={theme} lang={lang}>
+                <ImgLogo src={title === "dark" ? LogoDark : LogoLight} />
+                <NavbarLinks lang={lang}>
                     <Li
                         HTMLtext="Home"
-                        style={{ color: theme === "dark" ? "white" : "black" }}
+                        // style={{ color: theme === "dark" ? "white" : "black" }}
                         onClick={() => handleScroll("Home")}
                     />
                     <Li
@@ -50,7 +50,6 @@ export const Navbar = ({
                         hide={true}
                         className={`material-symbols-outlined ${menuToggle}`}
                         onClick={() => setMenuToggle(!menuToggle)}
-                        theme={theme}
                     >
                         {!menuToggle ? "menu" : "close"}
                     </MaterialIcons>
@@ -58,7 +57,6 @@ export const Navbar = ({
                         hide={false}
                         className={`material-symbols-outlined ${menuToggle}`}
                         onClick={() => setShowWindow(true)}
-                        theme={theme}
                     >
                         settings
                     </MaterialIcons>
@@ -68,23 +66,19 @@ export const Navbar = ({
     );
 };
 
-const NavbarComponent = styled.nav.attrs({
-    className: "",
-})<{ theme: string }>`
+const NavbarComponent = styled.nav`
     flex-wrap: nowrap;
     position: fixed;
     width: 100%;
     max-width: inherit;
-    background: ${(p) => (p.theme === "dark" ? "#1f2233" : "#e8e8e8")};
     box-shadow: 0px 0 5px 2px #888;
+    background: ${(props) => props.theme.colors.background_primary};
     border: none;
     margin-bottom: 0;
     z-index: 9;
 `;
 
-const NavbarContainer = styled.div.attrs({
-    className: "",
-})`
+const NavbarContainer = styled.div`
     @media screen and (max-width: 980px) {
         justify-content: space-between !important;
     }
@@ -108,9 +102,7 @@ const ImgLogo = styled.img`
     width: auto;
 `;
 
-const Ul = styled.ul.attrs({
-    className: "",
-})<{ theme: string }>`
+const Ul = styled.ul`
     margin: 0 !important;
     display: flex;
     flex-wrap: wrap;
@@ -119,13 +111,11 @@ const Ul = styled.ul.attrs({
     -webkit-box-pack: justify;
     justify-content: space-between;
     a {
-        color: ${(p) => (p.theme === "dark" ? "#889BAE" : "#113f67")};
+        color: ${(props) => props.theme.colors.primary};
     }
 `;
 
-const NavbarCollapse = styled.div.attrs({
-    className: "",
-})`
+const NavbarCollapse = styled.div`
     @media screen and (max-width: 980px) {
         display: none !important;
     }
@@ -138,18 +128,16 @@ const NavbarCollapse = styled.div.attrs({
     transition: all 0.4s ease-in-out;
 `;
 const NavbarLinks = ({
-    theme,
     lang,
     children,
 }: {
-    theme: string;
     lang: string;
     children: JSX.Element | JSX.Element[];
 }) => {
     return (
         <NavbarCollapse>
-            <Ul theme={theme}>{children}</Ul>
-            <ContactMe theme={theme} href="#contact">
+            <Ul>{children}</Ul>
+            <ContactMe href="#contact">
                 {lang === "en" ? "Contact Me" : "Contato"}
             </ContactMe>
         </NavbarCollapse>
@@ -185,25 +173,24 @@ const Li = ({
     );
 };
 
-const ContactMe = styled.a.attrs({
-    className: "",
-})<{ theme: string }>`
-    color: ${(p) => (p.theme === "dark" ? "#fbf4e0" : "black")};
+const ContactMe = styled.a`
+    color: ${(props) => props.theme.colors.primary};
+    border: 1px solid ${(props) => props.theme.colors.primary};
     font-size: 15px;
     font-weight: 600;
     letter-spacing: 0.5px;
     text-transform: capitalize;
     text-decoration: none;
     padding: 10px 18px;
-    border: 1px solid ${(p) => (p.theme === "dark" ? "#889BAE" : "#113f67")};
+
     border-radius: 4px;
     margin-left: 10px;
     font-family: "Montserrat", sans-serif;
     transition: all 0.4s ease-in-out;
 
     &:hover {
-        background: ${(p) => (p.theme === "dark" ? "#889BAE" : "#113f67")};
-        color: ${(p) => (p.theme === "dark" ? "#1f2233" : "white")};
+        color: ${(props) => props.theme.colors.background_primary};
+        background: ${(props) => props.theme.colors.primary};
     }
 `;
 
@@ -221,7 +208,7 @@ const MaterialIcons = styled.span<{ hide: boolean }>`
     }
 
     display: ${(p) => (p.hide ? `none` : "block")};
-    color: ${(p) => (p.theme === "dark" ? "white" : "#113f67")};
+    color: ${(props) => props.theme.colors.third};
     font-size: 40px;
     padding: 16.5px 18px;
     border-radius: 10px;

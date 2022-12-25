@@ -1,5 +1,4 @@
 import { Routes, Route } from "react-router-dom";
-import "./App.css";
 import { Home } from "./pages/Home/Home";
 import "bootstrap/dist/css/bootstrap.css";
 import { Container, WindowConfig } from "./components";
@@ -7,7 +6,9 @@ import { useEffect, useState } from "react";
 import { Footer } from "./pages/Footer/Footer";
 import { LoadingPage } from "./pages/LoadingPage/LoadingPage";
 import GlobalStyle from "./styles/global";
-
+import { ThemeProvider } from "styled-components";
+import light from "./styles/themes/light";
+import dark from "./styles/themes/dark";
 
 function App() {
     const [showLoadingPage, setShowLoadingPage] = useState(true);
@@ -18,14 +19,14 @@ function App() {
             ? "en"
             : "pt"
     );
-    const [theme, setTheme] = useState<string>(
+    const [theme, setTheme] = useState(
         localStorage.getItem("theme") === null ||
             localStorage.getItem("theme") === "dark"
-            ? "dark"
-            : "light"
+            ? dark
+            : light
     );
 
-    if (theme === null) localStorage.setItem("theme", "dark");
+    if (theme === null) localStorage.setItem("theme", JSON.stringify(dark));
     if (lang === null) localStorage.setItem("lang", "en");
 
     useEffect(() => {
@@ -34,7 +35,10 @@ function App() {
     }, []);
 
     useEffect(() => {
-        localStorage.setItem("theme", theme);
+        localStorage.setItem(
+            "theme",
+            theme.title === "light" ? "dark" : "light"
+        );
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [theme]);
 
@@ -43,26 +47,28 @@ function App() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [lang]);
 
+    const toggleTheme = () => {
+        setTheme(theme.title === "light" ? dark : light);
+    };
+
     return (
-        <Container theme={theme} lang={lang} setShowWindow={setShowWindow}>
-            <GlobalStyle/>
-            <LoadingPage loading={showLoadingPage} />
-            <WindowConfig
-                theme={theme}
-                lang={lang}
-                setTheme={setTheme}
-                setLang={setLang}
-                showWindow={showWindow}
-                setShowWindow={setShowWindow}
-            />
-            <Routes>
-                <Route
-                    path="/"
-                    element={<Home theme={theme} lang={lang} />}
-                ></Route>
-            </Routes>
-            <Footer id={"Footer"} theme={theme} lang={lang} />
-        </Container>
+        <ThemeProvider theme={theme}>
+            <Container lang={lang} setShowWindow={setShowWindow}>
+                <GlobalStyle />
+                <LoadingPage loading={showLoadingPage} />
+                <WindowConfig
+                    lang={lang}
+                    setTheme={toggleTheme}
+                    setLang={setLang}
+                    showWindow={showWindow}
+                    setShowWindow={setShowWindow}
+                />
+                <Routes>
+                    <Route path="/" element={<Home lang={lang} />}></Route>
+                </Routes>
+                <Footer id={"Footer"} lang={lang} />
+            </Container>
+        </ThemeProvider>
     );
 }
 
