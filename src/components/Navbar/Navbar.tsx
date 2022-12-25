@@ -2,7 +2,6 @@ import { useState } from "react";
 import styled from "styled-components";
 import LogoDark from "../../assets/imgs/logo-no-background-white.svg";
 import LogoLight from "../../assets/imgs/logo-no-background.svg";
-import "./Navbar.scss";
 
 export const Navbar = ({
     theme,
@@ -14,32 +13,36 @@ export const Navbar = ({
     lang: string;
 }) => {
     const [menuToggle, setMenuToggle] = useState(false);
-
+    const handleScroll = (id: string) => {
+        const item = document.getElementById(id) as HTMLElement;
+        const pos = item.getBoundingClientRect();
+        window.scrollTo(0, pos.top);
+    };
     return (
         <NavbarComponent theme={theme}>
             <NavbarContainer>
                 <ImgLogo src={theme === "dark" ? LogoDark : LogoLight} />
                 <NavbarLinks theme={theme} lang={lang}>
                     <Li
-                        href="#home"
                         HTMLtext="Home"
-                        style={{ color: "white" }}
+                        style={{ color: theme === "dark" ? "white" : "black" }}
+                        onClick={() => handleScroll("Home")}
                     />
                     <Li
-                        href="#portfolio"
                         HTMLtext={lang === "en" ? "Portfolio" : "Portifólio"}
+                        onClick={() => handleScroll("Home")}
                     />
                     <Li
-                        href="#services"
                         HTMLtext={lang === "en" ? "Services" : "Serviços"}
+                        onClick={() => handleScroll("MyServices")}
                     />
                     <Li
-                        href="#about"
                         HTMLtext={lang === "en" ? "About" : "Sobre"}
+                        onClick={() => handleScroll("Home")}
                     />
                     <Li
-                        href="#resume"
                         HTMLtext={lang === "en" ? "Resume" : "Carreira"}
+                        onClick={() => handleScroll("Home")}
                     />
                 </NavbarLinks>
                 <IconsContainer>
@@ -68,14 +71,15 @@ export const Navbar = ({
 const NavbarComponent = styled.nav.attrs({
     className: "",
 })<{ theme: string }>`
+    flex-wrap: nowrap;
     position: fixed;
     width: 100%;
     max-width: inherit;
-    background: ${(p) => (p.theme === "dark" ? "#1f2233" : "white")};
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.12);
+    background: ${(p) => (p.theme === "dark" ? "#1f2233" : "#e8e8e8")};
+    box-shadow: 0px 0 5px 2px #888;
     border: none;
     margin-bottom: 0;
-    z-index: 3;
+    z-index: 9;
 `;
 
 const NavbarContainer = styled.div.attrs({
@@ -95,10 +99,15 @@ const NavbarContainer = styled.div.attrs({
 `;
 
 const ImgLogo = styled.img`
+    @media screen and (max-width: 380px) {
+        height: 6vh;
+    }
+
     height: 6.5vh;
     padding: 10px 0px;
     width: auto;
 `;
+
 const Ul = styled.ul.attrs({
     className: "",
 })<{ theme: string }>`
@@ -161,16 +170,16 @@ const NavLink = styled.a.attrs({
     padding: 10px 12px;
 `;
 const Li = ({
-    href,
     HTMLtext,
     style,
+    onClick,
 }: {
     style?: React.CSSProperties;
-    href: string;
     HTMLtext: string;
+    onClick: any;
 }) => {
     return (
-        <NavLink href={href} style={style}>
+        <NavLink style={style} onClick={onClick}>
             {HTMLtext}
         </NavLink>
     );
@@ -205,6 +214,10 @@ const IconsContainer = styled.div`
 const MaterialIcons = styled.span<{ hide: boolean }>`
     @media screen and (max-width: 980px) {
         display: block !important;
+    }
+
+    @media screen and (max-width: 680px) {
+        font-size: 30px !important;
     }
 
     display: ${(p) => (p.hide ? `none` : "block")};

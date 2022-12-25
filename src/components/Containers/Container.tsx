@@ -10,6 +10,10 @@ const DivWrapper = styled.div`
 `;
 
 const DivContainer = styled.div`
+    @media screen and (max-width: 680px) {
+        padding-top: 93px !important;
+    }
+
     padding-top: 103px;
     display: flex;
     flex-direction: column;

@@ -1,14 +1,17 @@
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import { Home } from "./pages/Home/Home";
-import { Project } from "./pages/Projects/Project";
 import "bootstrap/dist/css/bootstrap.css";
 import { Container, WindowConfig } from "./components";
 import { useEffect, useState } from "react";
+import { Footer } from "./pages/Footer/Footer";
+import { LoadingPage } from "./pages/LoadingPage/LoadingPage";
+import GlobalStyle from "./styles/global";
+
 
 function App() {
-    const firstVisit: string | null = localStorage.getItem("firstVisit");
-    const [showWindow, setShowWindow] = useState(true);
+    const [showLoadingPage, setShowLoadingPage] = useState(true);
+    const [showWindow, setShowWindow] = useState(false);
     const [lang, setLang] = useState<string>(
         localStorage.getItem("lang") === null ||
             localStorage.getItem("lang") === "en"
@@ -26,6 +29,11 @@ function App() {
     if (lang === null) localStorage.setItem("lang", "en");
 
     useEffect(() => {
+        setTimeout(() => setShowLoadingPage(false), 4000);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
         localStorage.setItem("theme", theme);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [theme]);
@@ -37,6 +45,8 @@ function App() {
 
     return (
         <Container theme={theme} lang={lang} setShowWindow={setShowWindow}>
+            <GlobalStyle/>
+            <LoadingPage loading={showLoadingPage} />
             <WindowConfig
                 theme={theme}
                 lang={lang}
@@ -50,8 +60,8 @@ function App() {
                     path="/"
                     element={<Home theme={theme} lang={lang} />}
                 ></Route>
-                <Route path="/project" element={<Project />}></Route>
             </Routes>
+            <Footer id={"Footer"} theme={theme} lang={lang} />
         </Container>
     );
 }

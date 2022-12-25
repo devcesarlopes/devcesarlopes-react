@@ -140,8 +140,8 @@ export const WindowConfig = ({
                                 />
                                 <strong>
                                     {lang === "en" || lang === null
-                                        ? "Portuguese-BR"
-                                        : "Português-BR"}
+                                        ? "Portuguese"
+                                        : "Português"}
                                 </strong>
                             </SelectionOption>
                         </CardSelection>
@@ -163,6 +163,11 @@ const CardBackground = styled.div`
 `;
 
 const Card = styled.div`
+    @media screen and (max-width: 1080px) {
+        width: 95% !important;
+        margin-left: 2.5% !important;
+    }
+
     margin-top: 25vh;
     position: fixed;
     margin-left: 20%;
@@ -204,7 +209,7 @@ const CardBody = styled.div<{ theme: string }>`
 `;
 
 const CardSelectionContainer = styled.div<{ theme: string }>`
-    width: 80%;
+    width: 100%;
     // color: ${(p) => (p.theme === "dark" ? "white" : "")};
     // border-radius: 0 0 5px 5px;
     // display: flex;
@@ -230,6 +235,10 @@ const CardSelection = styled.div`
 `;
 
 const SelectionOption = styled.div<{ type: string; theme: string }>`
+    @media screen and (max-width: 680px) {
+        font-size: 0.8rem;
+    }
+
     width: 50%;
     display: flex;
     align-items: center;
