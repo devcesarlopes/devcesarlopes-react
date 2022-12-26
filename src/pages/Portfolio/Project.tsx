@@ -5,6 +5,7 @@ import {
     SIMC40,
     SIMC40Tablet,
     SIMC40Phone,
+    SIMC40Reader,
 } from "../../assets/imgs";
 import {
     BoxBorder,
@@ -77,6 +78,11 @@ export const Project = ({ lang, type }: { lang: string; type: string }) => {
                 <BoxImageContent type="tablet" src={mediumScreenContentSrc()} />
                 <BoxImage type="phone" src={Phone} />
                 <BoxImageContent type="phone" src={smallScreenContentSrc()} />
+                {type === "SIMC40" ? (
+                    <BoxImage type="tcl-reader" src={SIMC40Reader} />
+                ) : (
+                    <></>
+                )}
             </DivBoxImage>
             <BoxText>{lang === "en" ? enText() : ptText()}</BoxText>
         </BoxBorder>

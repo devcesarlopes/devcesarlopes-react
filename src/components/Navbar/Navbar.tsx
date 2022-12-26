@@ -1,8 +1,8 @@
 import { MouseEvent, useContext, useState } from "react";
-import { ThemeContext } from "styled-components";
+import styled, { ThemeContext } from "styled-components";
 import LogoDark from "../../assets/imgs/logo-no-background-white.svg";
 import LogoLight from "../../assets/imgs/logo-no-background.svg";
-import { Li } from "./Li";
+import { Li, LiVertical } from "./Li";
 import { NavbarLinks } from "./NavbarLinks";
 import {
     NavbarComponent,
@@ -10,6 +10,7 @@ import {
     ImgLogo,
     IconsContainer,
     MaterialIcons,
+    NavbarVerticalCollapse,
 } from "./styles";
 
 export const Navbar = ({
@@ -20,6 +21,7 @@ export const Navbar = ({
     setShowWindow: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
     const [menuToggle, setMenuToggle] = useState(false);
+
     const handleScroll = (event: MouseEvent<HTMLAnchorElement>) => {
         event.preventDefault();
         console.log(window.outerHeight);
@@ -91,13 +93,61 @@ export const Navbar = ({
                     </MaterialIcons>
                     <MaterialIcons
                         hide={false}
-                        className={`material-symbols-outlined ${menuToggle}`}
+                        className={`material-symbols-outlined`}
                         onClick={() => setShowWindow(true)}
                     >
                         settings
                     </MaterialIcons>
                 </IconsContainer>
             </NavbarContainer>
+            {menuToggle ? (
+                <NavbarVerticalCollapse>
+                    <LiVertical
+                        id="goto-Home"
+                        HTMLtext="Home"
+                        onClick={(event) => {
+                            handleScroll(event);
+                            setMenuToggle(!menuToggle);
+                        }}
+                    />
+                    <LiVertical
+                        id="goto-Portfolio"
+                        HTMLtext={lang === "en" ? "Portfolio" : "Portifolio"}
+                        onClick={(event) => {
+                            handleScroll(event);
+                            setMenuToggle(!menuToggle);
+                        }}
+                    />
+                    <LiVertical
+                        id="goto-About"
+                        HTMLtext={lang === "en" ? "About" : "Sobre"}
+                        onClick={(event) => {
+                            handleScroll(event);
+                            setMenuToggle(!menuToggle);
+                        }}
+                    />
+                    <LiVertical
+                        id="goto-Experiences"
+                        HTMLtext={
+                            lang === "en" ? "Experiences" : "Experiências"
+                        }
+                        onClick={(event) => {
+                            handleScroll(event);
+                            setMenuToggle(!menuToggle);
+                        }}
+                    />
+                    <LiVertical
+                        id="goto-Footer"
+                        HTMLtext={lang === "en" ? "Contact Me" : "Contato"}
+                        onClick={(event) => {
+                            handleScroll(event);
+                            setMenuToggle(!menuToggle);
+                        }}
+                    />
+                </NavbarVerticalCollapse>
+            ) : (
+                <></>
+            )}
         </NavbarComponent>
     );
 };

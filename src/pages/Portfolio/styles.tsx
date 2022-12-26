@@ -101,6 +101,14 @@ export const BoxImage = styled.img<{ type: string }>`
                     left: 47%;
                     z-index:4;
                 `;
+            case "tcl-reader":
+                return `
+                    position: absolute;
+                    bottom:-10%; 
+                    width: 50%;
+                    left: -10%;
+                    z-index:4;
+                `;
         }
     }};
     width: ${(p) => {

@@ -4,7 +4,7 @@ export const CardBackground = styled.div`
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 5;
+    z-index: 100;
     height: 100vh;
     width: 100%;
     backdrop-filter: blur(5px);

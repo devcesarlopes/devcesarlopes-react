@@ -2,6 +2,7 @@ import MacPC from "./macpc.png";
 import SIMC40 from "./simc40.png";
 import SIMC40Tablet from "./simc40tablet.png";
 import SIMC40Phone from "./simc40phone.png";
+import SIMC40Reader from "./tcl-reader.png";
 import Tablet from "./tablet.png";
 import Phone from "./phone.png";
 import ProfilePicture from "./profile.png";
@@ -18,6 +19,7 @@ export {
     SIMC40,
     SIMC40Tablet,
     SIMC40Phone,
+    SIMC40Reader,
     ProfilePicture,
     GithubLogo,
     LinkedinLogo,

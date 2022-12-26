@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import styled, { ThemeContext } from "styled-components";
+import { ThemeContext } from "styled-components";
 import {
     CardBackground,
     Card,
