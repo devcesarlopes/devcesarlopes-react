@@ -1,7 +1,16 @@
 import { MouseEvent, useContext, useState } from "react";
-import styled, { ThemeContext } from "styled-components";
+import { ThemeContext } from "styled-components";
 import LogoDark from "../../assets/imgs/logo-no-background-white.svg";
 import LogoLight from "../../assets/imgs/logo-no-background.svg";
+import { Li } from "./Li";
+import { NavbarLinks } from "./NavbarLinks";
+import {
+    NavbarComponent,
+    NavbarContainer,
+    ImgLogo,
+    IconsContainer,
+    MaterialIcons,
+} from "./styles";
 
 export const Navbar = ({
     lang,
@@ -92,176 +101,3 @@ export const Navbar = ({
         </NavbarComponent>
     );
 };
-
-const NavbarComponent = styled.nav`
-    flex-wrap: nowrap;
-    position: fixed;
-    width: 100%;
-    max-width: inherit;
-    box-shadow: 0px 0 5px 2px #888;
-    background: ${(props) => props.theme.colors.background_primary};
-    border: none;
-    margin-bottom: 0;
-    z-index: 9;
-`;
-
-const NavbarContainer = styled.div`
-    @media screen and (max-width: 980px) {
-        justify-content: space-between !important;
-    }
-
-    padding: 15px 16px;
-    display: flex;
-    flex-wrap: wrap;
-    -webkit-box-align: center;
-    align-items: center;
-    -webkit-box-pack: justify;
-    justify-content: space-around;
-`;
-
-const ImgLogo = styled.img`
-    @media screen and (max-width: 380px) {
-        height: 6vh;
-    }
-
-    height: 6.5vh;
-    padding: 10px 0px;
-    width: auto;
-`;
-
-const Ul = styled.ul`
-    margin: 0 !important;
-    display: flex;
-    flex-wrap: wrap;
-    -webkit-box-align: center;
-    align-items: center;
-    -webkit-box-pack: justify;
-    justify-content: space-between;
-`;
-
-const NavbarCollapse = styled.div`
-    @media screen and (max-width: 980px) {
-        display: none !important;
-    }
-
-    display: flex;
-    flex-wrap: wrap;
-    -webkit-box-align: center;
-    align-items: center;
-    -webkit-box-pack: justify;
-    transition: all 0.4s ease-in-out;
-`;
-const NavbarLinks = ({
-    lang,
-    children,
-    handleScroll,
-}: {
-    lang: string;
-    children: JSX.Element | JSX.Element[];
-    handleScroll: (event: MouseEvent<HTMLAnchorElement>) => void;
-}) => {
-    return (
-        <NavbarCollapse>
-            <Ul>{children}</Ul>
-            <ContactMe id="goto-Footer" onClick={handleScroll}>
-                {lang === "en" ? "Contact Me" : "Contato"}
-            </ContactMe>
-        </NavbarCollapse>
-    );
-};
-
-const NavLink = styled.a.attrs({
-    className: "",
-})`
-    color: ${(props) => props.theme.colors.primary};
-    cursor: pointer;
-    font-size: 17px;
-    font-weight: bold;
-    letter-spacing: 0.5px;
-    text-transform: capitalize;
-    text-decoration: none;
-    font-family: "Montserrat", sans-serif;
-    transition: all 0.4s ease-in-out;
-    padding: 10px 12px;
-
-    &:hover {
-        color: ${(props) => props.theme.colors.background_primary};
-        background: ${(props) => props.theme.colors.primary};
-        border-radius: 4px;
-        padding: 2px 12px;
-    }
-`;
-const Li = ({
-    id,
-    HTMLtext,
-    style,
-    onClick,
-}: {
-    id: string;
-    style?: React.CSSProperties;
-    HTMLtext: string;
-    onClick: (event: MouseEvent<HTMLAnchorElement>) => void;
-}) => {
-    return (
-        <NavLink id={id} style={style} onClick={onClick}>
-            {HTMLtext}
-        </NavLink>
-    );
-};
-
-const ContactMe = styled.a`
-    color: ${(props) => props.theme.colors.primary};
-    border: 1px solid ${(props) => props.theme.colors.primary};
-    font-size: 15px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    text-transform: capitalize;
-    text-decoration: none;
-    padding: 10px 18px;
-    cursor: pointer;
-    border-radius: 4px;
-    margin-left: 10px;
-    font-family: "Montserrat", sans-serif;
-    transition: all 0.4s ease-in-out;
-
-    &:hover {
-        color: ${(props) => props.theme.colors.background_primary};
-        background: ${(props) => props.theme.colors.primary};
-    }
-`;
-
-const IconsContainer = styled.div`
-    display: flex;
-`;
-
-const MaterialIcons = styled.span<{ hide: boolean }>`
-    @media screen and (max-width: 980px) {
-        display: block !important;
-    }
-
-    @media screen and (max-width: 680px) {
-        font-size: 30px !important;
-    }
-
-    display: ${(p) => (p.hide ? `none` : "block")};
-    color: ${(props) => props.theme.colors.third};
-    font-size: 40px;
-    padding: 16.5px 18px;
-    border-radius: 10px;
-    transition: all 0.4s ease;
-
-    &.true {
-        transform: rotateZ(-90deg);
-
-        transition: all 0.4s ease;
-    }
-
-    &.false {
-        transition: all 0.4s ease;
-    }
-
-    &:hover {
-        cursor: pointer;
-        transform: ${(p) => (p.hide ? "" : "rotateZ(-90deg)")};
-    }
-`;
